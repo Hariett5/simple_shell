@@ -1,12 +1,12 @@
 #include "shell.h"
 
 /**
- * is_chain - Tests if the current character in the buffer is a chain delimiter
- * @info: Parameter struct
- * @buf: Character buffer
- * @p: Address of the current position in buf
+ * is_chain - Test if current character in buffer is a chain delimeter
+ * @info: The parameter struct
+ * @buf: The char buffer
+ * @p: Address of current position in buf
  *
- * Return: 1 if chain delimiter, 0 otherwise
+ * Return: 1 if chain delimeter, 0 otherwise
  */
 int is_chain(info_t *info, char *buf, size_t *p)
 {
@@ -24,9 +24,9 @@ int is_chain(info_t *info, char *buf, size_t *p)
 		j++;
 		info->cmd_buf_type = CMD_AND;
 	}
-	else if (buf[j] == ';') /* Found end of this command */
+	else if (buf[j] == ';') /* found end of this command */
 	{
-		buf[j] = 0; /* Replace semicolon with null */
+		buf[j] = 0; /* replace semicolon with null */
 		info->cmd_buf_type = CMD_CHAIN;
 	}
 	else
@@ -36,12 +36,12 @@ int is_chain(info_t *info, char *buf, size_t *p)
 }
 
 /**
- * check_chain - Checks if we should continue chaining based on last status
- * @info: Parameter struct
- * @buf: Character buffer
- * @p: Address of the current position in buf
+ * check_chain - checks we should continue chaining based on last status
+ * @info: The parameter struct
+ * @buf: The char buffer
+ * @p: Address of current position in buf
  * @i: Starting position in buf
- * @len: Length of buf
+ * @len: length of buf
  *
  * Return: Void
  */
@@ -70,8 +70,8 @@ void check_chain(info_t *info, char *buf, size_t *p, size_t i, size_t len)
 }
 
 /**
- * replace_alias - Replaces an alias in the tokenized string
- * @info: Parameter struct
+ * replace_alias - replaces an aliases in the tokenized string
+ * @info: the parameter struct
  *
  * Return: 1 if replaced, 0 otherwise
  */
@@ -100,7 +100,7 @@ int replace_alias(info_t *info)
 
 /**
  * replace_vars - Replaces variables in the tokenized string
- * @info: Parameter struct
+ * @info: the parameter struct
  *
  * Return: 1 if replaced, 0 otherwise
  */
@@ -134,14 +134,15 @@ int replace_vars(info_t *info)
 			continue;
 		}
 		replace_string(&info->argv[i], _strdup(""));
+
 	}
 	return (0);
 }
 
 /**
- * replace_string - Replaces a string
- * @old: Address of the old string
- * @new: New string
+ * replace_string - replaces string
+ * @old: address of old string
+ * @new: new string
  *
  * Return: 1 if replaced, 0 otherwise
  */
@@ -151,4 +152,3 @@ int replace_string(char **old, char *new)
 	*old = new;
 	return (1);
 }
-

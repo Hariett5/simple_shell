@@ -2,54 +2,53 @@
 
 /**
  * is_cmd - Check if a file is an executable command
- * @info: Pointer to the info struct
+ * @info: The info struct
  * @path: Path to the file
  *
- * Return: 1 if the file is a command, 0 otherwise
+ * Return: 1 if true, 0 otherwise
  */
 int is_cmd(info_t *info, char *path)
 {
 	struct stat st;
 
 	(void)info;
-	if (!path || stat(path, &st) != 0)
+	if (!path || stat(path, &st))
 		return (0);
 
-	if (S_ISREG(st.st_mode))
+	if (st.st_mode & S_IFREG)
+	{
 		return (1);
-
+	}
 	return (0);
 }
 
 /**
- * dup_chars - Duplicate a portion of a string
- * @pathstr: The string to duplicate from
+ * dup_chars - Duplicates characters
+ * @pathstr: The PATH string
  * @start: Starting index
- * @stop: Stopping index
+ * @stop:Sstopping index
  *
- * Return: Pointer to the new buffer
+ * Return: Pointer to new buffer
  */
 char *dup_chars(char *pathstr, int start, int stop)
 {
 	static char buf[1024];
-	int i, k = 0;
+	int i = 0, k = 0;
 
-	for (i = start; i < stop; i++)
-	{
+	for (k = 0, i = start; i < stop; i++)
 		if (pathstr[i] != ':')
 			buf[k++] = pathstr[i];
-	}
-	buf[k] = '\0';
+	buf[k] = 0;
 	return (buf);
 }
 
 /**
- * find_path - Find the full path of a command in the PATH string
- * @info: Pointer to the info struct
+ * find_path -Finds this cmd in the PATH string
+ * @info: The info struct
  * @pathstr: The PATH string
- * @cmd: The command to find
+ * @cmd: The cmd to find
  *
- * Return: The full path of the command if found, or NULL
+ * Return: The full path of cmd if found or NULL
  */
 char *find_path(info_t *info, char *pathstr, char *cmd)
 {
@@ -58,13 +57,11 @@ char *find_path(info_t *info, char *pathstr, char *cmd)
 
 	if (!pathstr)
 		return (NULL);
-
-	if (_strlen(cmd) > 2 && starts_with(cmd, "./"))
+	if ((_strlen(cmd) > 2) && starts_with(cmd, "./"))
 	{
 		if (is_cmd(info, cmd))
 			return (cmd);
 	}
-
 	while (1)
 	{
 		if (!pathstr[i] || pathstr[i] == ':')
@@ -85,6 +82,5 @@ char *find_path(info_t *info, char *pathstr, char *cmd)
 		}
 		i++;
 	}
-
 	return (NULL);
 }

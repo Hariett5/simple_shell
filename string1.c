@@ -1,34 +1,32 @@
 #include "shell.h"
 
 /**
- * _strcpy - Copy a string
- * @dest: The destination string
- * @src: The source string
+ * _strcpy - copy a string
+ * @dest: the destination
+ * @src: the source
  *
- * Return: Pointer to the destination string
+ * Return: pointer to destination
  */
 char *_strcpy(char *dest, char *src)
 {
 	int i = 0;
 
-	if (dest == src || src == NULL)
+	if (dest == src || src == 0)
 		return (dest);
-
-	while (src[i] != '\0')
+	while (src[i])
 	{
 		dest[i] = src[i];
 		i++;
 	}
-
-	dest[i] = '\0';
+	dest[i] = 0;
 	return (dest);
 }
 
 /**
- * _strdup - Duplicate a string
- * @str: The string to duplicate
+ * _strdup - Duplicates a string
+ * @str: the string to duplicate
  *
- * Return: Pointer to the duplicated string
+ * Return: pointer to the duplicated string
  */
 char *_strdup(const char *str)
 {
@@ -37,24 +35,19 @@ char *_strdup(const char *str)
 
 	if (str == NULL)
 		return (NULL);
-
-	while (str[length] != '\0')
+	while (*str++)
 		length++;
-
 	ret = malloc(sizeof(char) * (length + 1));
-	if (ret == NULL)
+	if (!ret)
 		return (NULL);
-
-	for (length = 0; str[length] != '\0'; length++)
-		ret[length] = str[length];
-
-	ret[length] = '\0';
+	for (length++; length--;)
+		ret[length] = *--str;
 	return (ret);
 }
 
 /**
- * _puts - Print a string
- * @str: The string to be printed
+ * _puts - Prints an input string
+ * @str: the string to be printed
  *
  * Return: Nothing
  */
@@ -62,9 +55,8 @@ void _puts(char *str)
 {
 	int i = 0;
 
-	if (str == NULL)
+	if (!str)
 		return;
-
 	while (str[i] != '\0')
 	{
 		_putchar(str[i]);
@@ -73,15 +65,15 @@ void _puts(char *str)
 }
 
 /**
- * _putchar - Write a character to stdout
- * @c: The character to print
+ * _putchar - Writes the character c to stdout
+ * @c:tThe character to print
  *
  * Return: On success 1.
  * On error, -1 is returned, and errno is set appropriately.
  */
 int _putchar(char c)
 {
-	static int i = 0;
+	static int i;
 	static char buf[WRITE_BUF_SIZE];
 
 	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
@@ -89,9 +81,7 @@ int _putchar(char c)
 		write(1, buf, i);
 		i = 0;
 	}
-
 	if (c != BUF_FLUSH)
 		buf[i++] = c;
-
 	return (1);
 }

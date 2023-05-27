@@ -1,8 +1,8 @@
 #include "shell.h"
 
 /**
- * _eputs - Prints a string to the standard error output.
- * @str: The string to be printed.
+ * _eputs - Prints a string to the standard error output
+ * @str: The string to be printed
  *
  * Return: void
  */
@@ -12,7 +12,6 @@ void _eputs(char *str)
 
 	if (!str)
 		return;
-
 	while (str[i] != '\0')
 	{
 		_eputchar(str[i]);
@@ -22,10 +21,10 @@ void _eputs(char *str)
 
 /**
  * _eputchar - Writes a character to the standard error output.
- * @c: The character to print.
+ * @c: The character to print
  *
- * Return: On success, returns 1.
- *         On error, returns -1 and sets errno appropriately.
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
  */
 int _eputchar(char c)
 {
@@ -37,20 +36,18 @@ int _eputchar(char c)
 		write(2, buf, i);
 		i = 0;
 	}
-
 	if (c != BUF_FLUSH)
 		buf[i++] = c;
-
 	return (1);
 }
 
 /**
  * _putfd - Writes a character to the specified file descriptor.
- * @c: The character to print.
- * @fd: The file descriptor to write to.
+ * @c: The character to print
+ * @fd: The filed escriptor to write to
  *
- * Return: On success, returns 1.
- *         On error, returns -1 and sets errno appropriately.
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
  */
 int _putfd(char c, int fd)
 {
@@ -62,19 +59,17 @@ int _putfd(char c, int fd)
 		write(fd, buf, i);
 		i = 0;
 	}
-
 	if (c != BUF_FLUSH)
 		buf[i++] = c;
-
 	return (1);
 }
 
 /**
- * _putsfd - Prints a string to the specified file descriptor.
- * @str: The string to be printed.
- * @fd: The file descriptor to write to.
+ * _puts- Prints a string to the specified file descriptor
+ * @str: The string to be printed
+ * @fd: The file descriptor to write to
  *
- * Return: The number of characters written.
+ * Return: The number of chars put
  */
 int _putsfd(char *str, int fd)
 {
@@ -82,11 +77,9 @@ int _putsfd(char *str, int fd)
 
 	if (!str)
 		return (0);
-
 	while (*str)
 	{
 		i += _putfd(*str++, fd);
 	}
-
 	return (i);
 }
